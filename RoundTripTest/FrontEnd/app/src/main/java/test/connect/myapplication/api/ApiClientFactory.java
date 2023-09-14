@@ -2,6 +2,7 @@ package test.connect.myapplication.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import test.connect.myapplication.model.Comment;
 
 public class ApiClientFactory {
 
@@ -11,7 +12,7 @@ public class ApiClientFactory {
 
         if (apiClientSeed == null) {
             apiClientSeed = new Retrofit.Builder()
-                    .baseUrl("https://jsonplaceholder.typicode.com/")
+                    .baseUrl("http://10.0.2.2:8080/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
@@ -23,4 +24,5 @@ public class ApiClientFactory {
         return GetApiClientSeed().create(PostApi.class);
     }
 
+    public static CommentApi GetCommentApi() { return GetApiClientSeed().create(CommentApi.class); }
 }
