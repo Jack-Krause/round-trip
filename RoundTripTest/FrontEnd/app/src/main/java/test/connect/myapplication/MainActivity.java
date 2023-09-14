@@ -6,6 +6,7 @@ import static test.connect.myapplication.api.ApiClientFactory.GetPostApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,7 +37,39 @@ public class MainActivity extends AppCompatActivity {
         EditText lastNameIn = findViewById(R.id.main_editText_last);
         EditText commentIn = findViewById(R.id.main_editText_comment);
 
+        RegenerateAllComments(apiText1);
 
+        postByPathBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GetCommentApi().PostCommentByPath(firstNameIn.getText().toString(), lastNameIn.getText().toString(), commentIn.getText().toString()).enqueue(new SlimCallback<Comment>(comment->{
+                    RegenerateAllComments(apiText1);
+                    firstNameIn.setText("");
+                    lastNameIn.setText("");
+                    commentIn.setText("");
+
+                }));
+            }
+        });
+
+        postByBodyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Comment newComment = new Comment();
+                newComment.setFirstName(firstNameIn.getText().toString());
+                newComment.setLastName(lastNameIn.getText().toString());
+                newComment.setComment(commentIn.getText().toString());
+                GetCommentApi().PostCommentByBody(newComment).enqueue(new SlimCallback<Comment>(comment->{
+                    RegenerateAllComments(apiText1);
+                    firstNameIn.setText("");
+                    lastNameIn.setText("");
+                    commentIn.setText("");
+                }));
+            }
+        });
+    }
+
+    void RegenerateAllComments(TextView apiText1) {
         GetCommentApi().GetAllComments().enqueue(new SlimCallback<List<Comment>>(comments ->{
             apiText1.setText("");
 
@@ -47,5 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         }, "GetAllComments"));
     }
+
 }
 
