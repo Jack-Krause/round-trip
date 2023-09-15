@@ -1,7 +1,6 @@
 package test.connect.myapplication;
 
 import static test.connect.myapplication.api.ApiClientFactory.GetCommentApi;
-import static test.connect.myapplication.api.ApiClientFactory.GetPostApi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,12 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import test.connect.myapplication.api.SlimCallback;
 import test.connect.myapplication.model.Comment;
-import test.connect.myapplication.model.Post;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     firstNameIn.setText("");
                     lastNameIn.setText("");
                     commentIn.setText("");
-
                 }));
             }
         });
@@ -70,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void RegenerateAllComments(TextView apiText1) {
-        GetCommentApi().GetAllComments().enqueue(new SlimCallback<List<Comment>>(comments ->{
+        GetCommentApi().GetAllComment().enqueue(new SlimCallback<List<Comment>>(comments ->{
             apiText1.setText("");
 
             for (int i = comments.size()-1; i >= 0; i--) {
@@ -78,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-        }, "GetAllComments"));
+        }, "GetAllComment"));
     }
 
 }

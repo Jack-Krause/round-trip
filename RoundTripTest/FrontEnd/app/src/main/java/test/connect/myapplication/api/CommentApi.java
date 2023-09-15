@@ -11,8 +11,8 @@ import test.connect.myapplication.model.Comment;
 
 public interface CommentApi {
 
-    @GET("comment/1")
-    Call<List<Comment>> GetAllComments();
+    @GET("comment/all")
+    Call<List<Comment>> GetAllComment();
 
     @POST("comment/post/{f}/{l}/{c}")
     Call<Comment> PostCommentByPath(@Path("f") String firstName, @Path("l") String lastName, @Path("c") String comment);
