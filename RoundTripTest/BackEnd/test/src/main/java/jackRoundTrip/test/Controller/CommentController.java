@@ -40,6 +40,10 @@ public class CommentController {
         return newComment;
     }
 
-
+    @DeleteMapping("comment/delete/{i}")
+    String DeleteCommentByPath(@PathVariable long i) {
+        commentRepository.deleteById(i);
+        return "Deleted: " + i;
+    }
 
 }
